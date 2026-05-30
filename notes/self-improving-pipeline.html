@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Self-Improving Pipeline — Hakeem Rashid</title>
+<meta name="description" content="I built a system to grade my own AI sessions. The most useful thing it found was about me.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="notes.css">
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="/#top">hakeem rashid<span class="dot">.</span></a>
+  <nav class="topnav"><a href="/notes/">Field Notes</a><a href="/#contact">Contact</a></nav>
+</div></header>
+
+<div class="wrap">
+  <div class="post-head">
+    <div class="eyebrow">Field Note 02</div>
+    <h1>The Self-Improving Pipeline</h1>
+    <p class="dek">I built a system to grade my own AI sessions. The most useful thing it found was about me.</p>
+    <div class="meta"><span>~5 min read</span><span>Build in public</span><span>Feedback loops</span></div>
+  </div>
+
+  <article class="post">
+    <p>A workflow that makes the same mistake twice is a broken workflow. That sentence is easy to write and hard to live by, because catching your own repeated mistakes means looking at your own work honestly, on a schedule, forever. People don't do that. Systems can.</p>
+
+    <p>So I built one. Every time an AI work session on my machine ends, a hook fires and harvests the transcript. A scorer reads it and assigns a quality grade from zero to one, based on signals like how many tool calls failed, how many times I corrected course, and how long the session ran. Once a week a triage step reads the corrections I made during those sessions, sorts them keep-or-discard, and promotes the useful ones into rules the harness loads on its own. A final step reads the whole corpus and generates hypotheses about what would raise the next batch of scores.</p>
+
+    <div class="nums">
+      <div class="num"><b>207</b><span>sessions scored</span></div>
+      <div class="num"><b>0.787</b><span>average quality</span></div>
+      <div class="num"><b>126</b><span>learnings triaged</span></div>
+      <div class="num"><b>3</b><span>changes deployed</span></div>
+    </div>
+
+    <h2>What surprised me</h2>
+    <p>I built this expecting it to tell me things about the AI. The most useful thing it found was about me. When I sorted every session by score, the low-quality ones shared two traits, and neither was subtle. The worst sessions ran roughly ten times longer than the best ones, and racked up roughly ten times as many tool errors on the way.</p>
+
+    <p>Length was not a symptom of hard problems. Length was the cause of bad work. A session that runs past ninety minutes has usually compacted its own context once or twice, and every compaction smears the earlier work into a sediment the model then reasons against. The fix the data pointed to was almost insultingly simple. Stop working in long sessions. Split at ninety minutes. Start fresh.</p>
+
+    <h2>The system handed me the rule</h2>
+    <p>I did not reach that from intuition. The pipeline reached it from 207 graded sessions and handed it to me. Of the nine hypotheses it generated, I shipped three. The ninety-minute split was the first. The second cut the volume of rules auto-loaded at session start, because the data showed heavy rule-loading tracked with worse outcomes, not better. The third was a tight checklist for one kind of session the scores kept flagging as failure-prone.</p>
+
+    <div class="ships">
+      <div class="lbl">The code ships with the page</div>
+      <p style="margin:8px 0 0"><a href="https://github.com/HR-AR/claude-code-skills">github.com/HR-AR/claude-code-skills</a> — the harness the scorer runs inside.</p>
+    </div>
+
+    <h2>Automation versus a feedback loop</h2>
+    <p>This is the part most AI tooling skips. It is not hard to build a system that does work. It is hard to build a system that watches its own work, notices the pattern, and rewrites its own rules. The first is automation. The second is a feedback loop, and a feedback loop is the only kind of system that gets better without me standing over it.</p>
+
+    <blockquote>A system that only confirms what I already believe is a mirror, not a tool.</blockquote>
+
+    <p>The dashboard is not flattering. It told me my instinct to push through a long session is the single most reliable way I make my own output worse. I keep it precisely because it argues with me.</p>
+  </article>
+
+  <div class="post-foot">
+    <a class="back" href="/notes/">← All Field Notes</a>
+    <div class="sig">Hakeem Rashid · Director, Last Mile Delivery Technology · <a href="/#top">hrrashid.com</a></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Methodology as Infrastructure — Hakeem Rashid</title>
+<meta name="description" content="Why I stopped writing prompt libraries and started wiring frameworks into the architecture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="notes.css">
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="/#top">hakeem rashid<span class="dot">.</span></a>
+  <nav class="topnav"><a href="/notes/">Field Notes</a><a href="/#contact">Contact</a></nav>
+</div></header>
+
+<div class="wrap">
+  <div class="post-head">
+    <div class="eyebrow">Field Note 01</div>
+    <h1>Methodology as Infrastructure</h1>
+    <p class="dek">Why I stopped writing prompt libraries and started wiring frameworks into the architecture.</p>
+    <div class="meta"><span>~5 min read</span><span>Build in public</span><span>AI workflow</span></div>
+  </div>
+
+  <article class="post">
+    <p>Most people treat an AI assistant like a clever intern. You write a good prompt, you hope it remembers, you correct it when it drifts. That works for one task. It falls apart at the fifth.</p>
+
+    <p>I run technology for a last-mile delivery operation that moves 100,000 packages a day. The work doesn't arrive one clean task at a time. It arrives as ten half-specified things at once, each touching a different system. The first time I handed that to a single long session, I watched the quality curve bend down. Task one came back sharp. By task five the model had quietly dropped half the constraints I set at the top.</p>
+
+    <h2>The problem isn't the model</h2>
+    <p>It's the architecture. A long context window is not a filing cabinet. It's a crowded room where the earliest instructions get drowned out by everything said since. The industry name for this is context decay. The usual response is a bigger prompt library: more rules, more examples, more reminders stacked at the top. That makes the room louder, not clearer.</p>
+
+    <p>So I stopped writing prompt libraries and started building infrastructure. The methodology doesn't live in a prompt the model might reread. It lives in code that forces the sequence whether the model is paying attention or not.</p>
+
+    <h2>The pattern</h2>
+    <p>I call it <code>do-work</code>. A complex request gets decomposed into independent requirement units before any work starts. REQ-001, REQ-002, and so on down the list. Each unit runs in its own fresh sub-context, and the model sees only three things: the workspace rules, that one requirement, and the reference material it actually needs. It does not inherit the conversation that came before.</p>
+
+    <p>When a unit finishes, its output is written to disk and committed to git as its own change. Then the working context is thrown away. The next unit starts clean.</p>
+
+    <div class="ships">
+      <div class="lbl">The code ships with the page</div>
+      <p style="margin:8px 0 0"><a href="https://github.com/HR-AR/claude-code-skills">github.com/HR-AR/claude-code-skills</a> — the do-work skill and the rest of the harness, open source.</p>
+    </div>
+
+    <h2>Why it holds</h2>
+    <p>Task five gets the same quality floor as task one, because to the model, task five <em>is</em> task one. There is no accumulated drift to fight, because nothing accumulates. Each commit is a checkpoint. If one unit comes back weak, I see it in the diff and rerun that unit alone, instead of untangling a 90-minute session to find where it went wrong.</p>
+
+    <p>The counterintuitive part is that the win came from giving the model <strong>less</strong>, not more. Every instinct says a smarter assistant should hold the whole problem in its head. In practice, the whole problem in its head is exactly what degrades the work. Isolation beats memory.</p>
+
+    <h2>Methodology as infrastructure</h2>
+    <p>A framework written in a prompt is a suggestion. A framework written into the harness is a constraint the model cannot skip when it gets sloppy, because the harness never gets sloppy. The same idea runs through everything I build: the pipeline that scores its own output, the rules that fire on every file save, the scheduler that runs the follow-up whether or not I remember it.</p>
+
+    <blockquote>Prompt libraries ask the model to behave. Infrastructure makes misbehaving impossible.</blockquote>
+
+    <p>I would rather build the second thing.</p>
+  </article>
+
+  <div class="post-foot">
+    <a class="back" href="/notes/">← All Field Notes</a>
+    <div class="sig">Hakeem Rashid · Director, Last Mile Delivery Technology · <a href="/#top">hrrashid.com</a></div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anti-Slop — Hakeem Rashid</title>
+<meta name="description" content="I use AI to write. Then a system strips out every sign that I did.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="notes.css">
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="/#top">hakeem rashid<span class="dot">.</span></a>
+  <nav class="topnav"><a href="/notes/">Field Notes</a><a href="/#contact">Contact</a></nav>
+</div></header>
+
+<div class="wrap">
+  <div class="post-head">
+    <div class="eyebrow">Field Note 03</div>
+    <h1>Anti-Slop</h1>
+    <p class="dek">I use AI to write. Then a system strips out every sign that I did.</p>
+    <div class="meta"><span>~4 min read</span><span>Build in public</span><span>Voice</span></div>
+  </div>
+
+  <article class="post">
+    <p>There is a particular texture to AI writing, and once you can see it you cannot unsee it. The relentless symmetry. The rule-of-three landing on every single point. The em-dash deployed like punctuation cologne. The phrase "it's worth noting that" introducing something not worth noting. Readers have learned this texture, and they have started to punish it.</p>
+
+    <p>On LinkedIn, posts that read as machine-written draw roughly a third less reach and about half the engagement of posts that read as human. The audience is not running a classifier. They feel the staleness and scroll past.</p>
+
+    <h2>I have a problem with that</h2>
+    <p>Because I use AI to write. A lot. The speed is real and I am not giving it up. But a personal brand written in a borrowed voice is worthless. If the words on my site sound like everyone else's assistant, they are not mine, and the entire point of a personal site is that it is mine.</p>
+
+    <p>So I built the counterweight. It is a rule file and a commit hook. The rule file holds a banned list: words like <code>delve</code>, <code>robust</code>, <code>comprehensive</code>, and leverage used as a verb; constructions like "in the realm of" and "not only, but also"; format tells like more than one em-dash in a paragraph. The hook runs on every commit. If banned language slips into anything I publish, the commit fails before it ever leaves my machine.</p>
+
+    <p>The banned list is not my taste. It is research. I keep a notebook of the actual linguistic signatures of generated text and the patterns that give it away, and the rule file is downstream of that. When a new tell shows up in the wild, it goes in the notebook first and the hook second.</p>
+
+    <div class="ships">
+      <div class="lbl">The code ships with the page</div>
+      <p style="margin:8px 0 0"><a href="https://github.com/HR-AR/claude-code-skills">github.com/HR-AR/claude-code-skills</a> — the rule file and the pre-commit hook that gate everything I publish.</p>
+    </div>
+
+    <h2>The word filter is the easy half</h2>
+    <p>The hard half is a question I run every piece against. Would a reader suspect this was AI, and could anyone else's assistant have written it? If the answer to the first is yes, I rewrite. If the answer to the second is yes, the writing has no point of view, and a point of view is the only thing worth publishing.</p>
+
+    <p>Authentic writing leads with a specific thing that happened, not a general claim. It states opinions as opinions. It admits what went wrong. It uses real numbers, 207 sessions, not "many sessions." It varies its own rhythm instead of marching in even rows. None of that is difficult. It is just the opposite of the default the models reach for when you don't stop them.</p>
+
+    <blockquote>When someone meets me in person after reading my writing, the two should be indistinguishable.</blockquote>
+
+    <p>Same voice, same opinions, same dry humor, same willingness to say the unflattering thing. If my digital self and my real self don't match, one of them is a performance, and readers can always tell which.</p>
+
+    <p class="pull">This page passed the hook. So did the two before it. That is the whole point.</p>
+  </article>
+
+  <div class="post-foot">
+    <a class="back" href="/notes/">← All Field Notes</a>
+    <div class="sig">Hakeem Rashid · Director, Last Mile Delivery Technology · <a href="/#top">hrrashid.com</a></div>
+  </div>
+</div>
+</body>
+</html>

@@ -87,6 +87,10 @@ section:first-of-type{border-top:none}
 .card-links{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px;font-family:var(--f-mono);font-size:12.5px}
 .card-links a{color:var(--cyan)}
 .card-links .tel{color:var(--fg-dim)}
+.photos-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px;font-family:var(--f-mono);font-size:12px}
+.photos-row .pl{color:var(--fg-mute)}
+.photos-chip{color:var(--purple);border:1px solid var(--rule);border-radius:999px;padding:3px 10px}
+.photos-chip:hover{border-color:var(--purple);text-decoration:none;background:rgba(167,139,250,.1)}
 
 /* badges */
 .badge{font-family:var(--f-mono);font-size:11px;letter-spacing:.03em;border-radius:6px;padding:3px 8px;white-space:nowrap;display:inline-block}
@@ -174,7 +178,7 @@ footer{border-top:1px solid var(--rule);padding:34px 0 60px;color:var(--fg-mute)
     <div class="sec-head">
       <p class="eyebrow">The ranking</p>
       <h2>Outdoor pools with slides</h2>
-      <p class="dek" style="font-size:16px">Sort and filter to fit your day. "#" is my recommended rank (distance + slide quality for bigger kids).</p>
+      <p class="dek" style="font-size:16px">Sort and filter to fit your day. "#" is my recommended rank (distance + slide quality for bigger kids). Tap <b style="color:var(--purple)">📷 Real photos</b> on any pool for live visitor galleries.</p>
     </div>
 
     <div class="controls">
@@ -361,6 +365,24 @@ const pools = [
     map:"https://maps.google.com/?q=Melvin+Ford+Aquatic+Center+Bentonville" }
 ];
 
+const photoExtras = {
+  "Rogers Aquatics Center": { yelp:"https://www.yelp.com/biz_photos/rogers-aquatics-center-rogers", ta:"https://www.tripadvisor.com/Attraction_Review-g31892-d4505753-Reviews-Rogers_Aquatics_Center-Rogers_Arkansas.html", fb:"https://www.facebook.com/RogersAquaticsCenter/photos" },
+  "Springdale Aquatic Center": { yelp:"https://www.yelp.com/biz_photos/springdale-aquatic-center-springdale", fb:"https://www.facebook.com/springdaleparksandrec/photos" },
+  "Siloam Springs Family Aquatic Center": { fb:"https://www.facebook.com/SiloamSpringsParksandRecreation/photos" },
+  "Wilson Park Pool": { yelp:"https://www.yelp.com/biz_photos/wilson-park-fayetteville" },
+  "Gravette Pool & Splash Park": { yelp:"https://www.yelp.com/biz_photos/gravette-pool-and-splash-park-gravette", ta:"https://www.tripadvisor.com/Attraction_Review-g31628-d23709189-Reviews-Gravette_Pool_Splash_Park-Gravette_Arkansas.html" },
+  "Prairie Grove Aquatic Park": { yelp:"https://www.yelp.com/biz_photos/prairie-grove-aquatic-park-prairie-grove", ta:"https://www.tripadvisor.com/Attraction_Review-g31875-d9605998-Reviews-Prairie_Grove_Aquatic_Park-Prairie_Grove_Arkansas.html", fb:"https://www.facebook.com/PrairieGroveAquaticPark/photos" }
+};
+function gmaps(p){ return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(p.name+", "+p.city+", AR"); }
+function photosRow(p){
+  const x = photoExtras[p.name] || {};
+  let chips = ['<a class="photos-chip" href="'+gmaps(p)+'" target="_blank" rel="noopener">Google Maps</a>'];
+  if(x.yelp) chips.push('<a class="photos-chip" href="'+x.yelp+'" target="_blank" rel="noopener">Yelp</a>');
+  if(x.ta) chips.push('<a class="photos-chip" href="'+x.ta+'" target="_blank" rel="noopener">TripAdvisor</a>');
+  if(x.fb) chips.push('<a class="photos-chip" href="'+x.fb+'" target="_blank" rel="noopener">Facebook</a>');
+  return '<div class="photos-row"><span class="pl">📷 Real photos:</span>'+chips.join('')+'</div>';
+}
+
 const deals = [
   { fac:"Rogers Aquatics", name:"Splash Pass +48\"", price:"$99", inc:"10 entries · full slide access (48\"+)", url:"https://rogersaquaticcenter.centeredgeonline.com/retail", best:true, status:"v" },
   { fac:"Rogers Aquatics", name:"Splash Pass −48\"", price:"$75", inc:"10 entries (under 48\")", url:"https://rogersaquaticcenter.centeredgeonline.com/retail", best:false, status:"v" },
@@ -429,6 +451,7 @@ function cardHTML(p){
     <p class="verdict">${p.verdict}</p>
     <p class="gotcha"><b>Heads up:</b> ${p.gotcha}</p>
     <div class="card-links">${linkBits(p)}</div>
+    ${photosRow(p)}
   </div>`;
 }
 function render(){
@@ -476,7 +499,7 @@ document.getElementById('deal-cards').innerHTML = deals.map(d=>`
 
 // splash pads
 document.querySelector('#splash-table tbody').innerHTML = splashPads.map(s=>`
-  <tr><td>${s[0]}</td><td>${s[1]}</td><td>${s[2]}</td><td><span class="${s[3]}">${s[3]==='v'?'✅':'⚠️'}</span></td><td class="sub">${s[4]}</td></tr>`).join('');
+  <tr><td><a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s[0]+', '+s[1]+', AR')}" target="_blank" rel="noopener">${s[0]}</a></td><td>${s[1]}</td><td>${s[2]}</td><td><span class="${s[3]}">${s[3]==='v'?'✅':'⚠️'}</span></td><td class="sub">${s[4]}</td></tr>`).join('');
 
 render();
 </script>
